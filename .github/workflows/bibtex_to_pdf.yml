@@ -6,7 +6,7 @@ on:
     - master
     paths:
       - '**.bib'  # Trigger the workflow on push events that include .bib files
-
+      - '**.yml'
 jobs:
   build:
     runs-on: ubuntu-latest
