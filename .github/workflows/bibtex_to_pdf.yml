@@ -2,6 +2,8 @@ name: Convert BibTeX to PDF
 
 on:
   push:
+    branches: 
+    - master
     paths:
       - '**.bib'  # Trigger the workflow on push events that include .bib files
 
