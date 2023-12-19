@@ -1,0 +1,32 @@
+name: Convert BibTeX to PDF
+
+on:
+  push:
+    paths:
+      - '**.bib'  # Trigger the workflow on push events that include .bib files
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Install LaTeX
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y texlive-latex-base texlive-bibtex-extra biber
+
+    - name: Convert BibTeX to PDF
+      run: |
+        chmod +x ./convert_bibtex_to_pdf.sh
+        ./convert_bibtex_to_pdf.sh
+
+    - name: Commit PDFs
+      run: |
+        git config --local user.name "$GITHUB_ACTOR"
+        git config --local user.email "$GITHUB_ACTOR@users.noreply.github.com"
+        git add -f *.pdf
+        git commit -m "Automated PDF generation"
+        git push origin || echo "No changes to commit"
