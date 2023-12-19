@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Create the pdfs directory if it does not exist
+mkdir -p pdfs
+
 # Loop through all .bib files in the current directory
 for bibfile in *.bib; do
     # Extract the filename without extension
@@ -25,4 +28,5 @@ EOF
 
     # Clean up auxiliary files
     rm $filename.aux $filename.bbl $filename.blg $filename.log $filename.tex
+    mv *.pdf pdfs/
 done
