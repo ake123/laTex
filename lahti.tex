@@ -1,15 +1,3 @@
-#!/bin/bash
-
-# Create the pdfs directory if it does not exist
-mkdir -p pdfs
-
-# Loop through all .bib files in the current directory
-for bibfile in *.bib; do
-    # Extract the filename without extension
-    filename="${bibfile%.*}"
-
-    # Create a basic .tex file that uses the .bib file
-    cat > $filename.tex << EOF
 \documentclass[a4paper,12pt]{article}
 \usepackage[verbose,nomarginpar,a4paper,margin=25mm]{geometry}
 \usepackage[utf8]{inputenc}
@@ -78,8 +66,8 @@ for bibfile in *.bib; do
 \begin{document}
 
 \begin{center}
-	\huge\textbf{List of publications}\\
-	\large\textit{John DOE, PhD}\\
+	\huge\textbf{List of publications}\
+	\large\textit{John DOE, PhD}\
 	\small{\today}
 \end{center}
 
@@ -92,15 +80,3 @@ for bibfile in *.bib; do
 \printbibliography[title={Miscellaneous}, category=misc]
 
 \end{document}
-EOF
-
-    # Run pdflatex and bibtex to generate the PDF
-    pdflatex $filename.tex
-    bibtex $filename
-    pdflatex $filename.tex
-    pdflatex $filename.tex
-
-    # Clean up auxiliary files
-    #rm $filename.aux $filename.bbl $filename.blg $filename.log $filename.tex
-    mv *.pdf pdfs/
-done
