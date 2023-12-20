@@ -29,6 +29,8 @@ jobs:
       run: |
         git config --local user.name "$GITHUB_ACTOR"
         git config --local user.email "$GITHUB_ACTOR@users.noreply.github.com"
+        git fetch
+        git rebase origin/master
         git add .
         git commit -m "Automated PDF generation" || echo "No changes to commit"
         git push --set-upstream origin HEAD:$(git rev-parse --abbrev-ref HEAD)
