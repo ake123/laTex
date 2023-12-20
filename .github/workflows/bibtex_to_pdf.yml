@@ -3,14 +3,16 @@ name: Convert BibTeX to PDF
 on:
   push:
     branches: 
-    - master
+      - master
     paths:
       - '**.bib'  # Trigger the workflow on push events that include .bib files
       - '**.yml'
       - '**.sh'
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v2
@@ -25,12 +27,22 @@ jobs:
         chmod +x ./convert_bibtex_to_pdf.sh
         ./convert_bibtex_to_pdf.sh
 
+    - name: Stash Uncommitted Changes
+      run: git stash
+
+    - name: Fetch Latest Changes
+      run: git fetch
+
+    - name: Rebase onto Master
+      run: git rebase origin/master
+
+    - name: Apply Stashed Changes
+      run: git stash apply
+
     - name: Commit PDFs
       run: |
         git config --local user.name "$GITHUB_ACTOR"
         git config --local user.email "$GITHUB_ACTOR@users.noreply.github.com"
-        git fetch
-        git rebase origin/master
         git add .
         git commit -m "Automated PDF generation" || echo "No changes to commit"
         git push --set-upstream origin HEAD:$(git rev-parse --abbrev-ref HEAD)
