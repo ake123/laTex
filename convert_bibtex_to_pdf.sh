@@ -102,5 +102,6 @@ EOF
 
     # Clean up auxiliary files
     #rm $filename.aux $filename.bbl $filename.blg $filename.log $filename.tex
+    rm $filename.aux $filename.bbl $filename.blg $filename.log $filename.run.xml $filename.tex
     mv *.pdf pdfs/
 done
