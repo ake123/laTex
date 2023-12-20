@@ -18,7 +18,7 @@ jobs:
     - name: Install Full LaTeX
       run: |
         sudo apt-get update
-        sudo apt-get install -y texlive-latex-base texlive-bibtex-extra biber
+        sudo apt-get install -y texlive-latex-base texlive-bibtex-extra biber texlive-pdftexcmds
 
     - name: Convert BibTeX to PDF
       run: |
