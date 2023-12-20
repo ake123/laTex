@@ -18,7 +18,7 @@ for bibfile in *.bib; do
 \usepackage{textcomp}
 \usepackage[datesep=.]{datetime2}
 \usepackage[url=false, doi=false, isbn=false, style=alphabetic, maxnames=10, sorting=ydnt, texencoding=utf8]{biblatex}
-
+\addbibresource{$bibfile}
 
 
 % use entry keys verbatim from the bib file
