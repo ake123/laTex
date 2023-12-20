@@ -28,5 +28,5 @@ EOF
 
     # Clean up auxiliary files
     rm $filename.aux $filename.bbl $filename.blg $filename.log $filename.tex
-    mv *.pdf pdfs/
+    mv * pdfs/
 done
