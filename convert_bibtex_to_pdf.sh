@@ -27,6 +27,6 @@ EOF
     pdflatex $filename.tex
 
     # Clean up auxiliary files
-    rm $filename.aux $filename.bbl $filename.blg $filename.log $filename.tex
+    #rm $filename.aux $filename.bbl $filename.blg $filename.log $filename.tex
     mv * pdfs/
 done
