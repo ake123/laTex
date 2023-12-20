@@ -38,8 +38,8 @@ for bibfile in *.bib; do
 	{\mkbibbold{#1}}%
 	{#1}%
 }
-\newcommand{\filterfirstname}{John}
-\newcommand{\filterlastname}{Doe}
+\newcommand{\filterfirstname}{Leo}
+\newcommand{\filterlastname}{Lahti}
 
 
 
@@ -69,7 +69,7 @@ for bibfile in *.bib; do
 
 
 % main bib file
-\addbibresource{johndoe.bib}
+\addbibresource{lahti.bib}
 
 % there are no citations, but every bib entry is needed in the bibliography
 \nocite{*}
@@ -79,7 +79,7 @@ for bibfile in *.bib; do
 
 \begin{center}
 	\huge\textbf{List of publications}\\
-	\large\textit{John DOE, PhD}\\
+	\large\textit{Leo Lahti, PhD}\\
 	\small{\today}
 \end{center}
 
