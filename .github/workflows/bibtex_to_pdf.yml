@@ -19,7 +19,7 @@ jobs:
     - name: Set up TeX Live
       uses: xu-cheng/latex-action@v2
       with:
-        root_file: document.tex
+        root_file: lahti.tex
 
     - name: Compile LaTeX document
       run: |
