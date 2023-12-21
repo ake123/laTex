@@ -23,10 +23,10 @@ jobs:
 
     - name: Compile LaTeX document
       run: |
-        pdflatex -interaction=nonstopmode document.tex
-        bibtex document
-        pdflatex -interaction=nonstopmode document.tex
-        pdflatex -interaction=nonstopmode document.tex
+        pdflatex -interaction=nonstopmode lahti.tex
+        bibtex lahti
+        pdflatex -interaction=nonstopmode lahti.tex
+        pdflatex -interaction=nonstopmode lahti.tex
 
     - name: Upload PDF
       uses: actions/upload-artifact@v2
