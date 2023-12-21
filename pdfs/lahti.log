@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2023.12.21)  21 DEC 2023 08:45
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2023.12.21)  21 DEC 2023 09:07
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -507,11 +507,11 @@ Package logreq Info: Writing requests to 'lahti.run.xml'.
 Here is how much of TeX's memory you used:
  11794 strings out of 478287
  237978 string characters out of 5849288
- 940061 words of memory out of 5000000
+ 940060 words of memory out of 5000000
  29928 multiletter control sequences out of 15000+600000
  489584 words of font info for 36 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 60i,5n,68p,738b,849s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 60i,5n,68p,742b,849s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}</usr/share/texmf/fonts/type1/
 public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></usr/sh
 are/texmf/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf/fonts/type1/public/
