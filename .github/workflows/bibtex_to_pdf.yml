@@ -10,41 +10,26 @@ on:
       - '**.sh'
 
 jobs:
-  build:
+  build_latex:
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v2
 
-    - name: Install Full LaTeX
+    - name: Set up TeX Live
+      uses: xu-cheng/latex-action@v2
+      with:
+        root_file: document.tex
+
+    - name: Compile LaTeX document
       run: |
-        sudo apt-get update
-        sudo apt-get install -y texlive-full
+        pdflatex -interaction=nonstopmode document.tex
+        bibtex document
+        pdflatex -interaction=nonstopmode document.tex
+        pdflatex -interaction=nonstopmode document.tex
 
-    - name: Convert BibTeX to PDF
-      run: |
-        chmod +x ./convert_bibtex_to_pdf.sh
-        ./convert_bibtex_to_pdf.sh
-
-    - name: Stash Uncommitted Changes
-      run: git stash
-
-    - name: Fetch Latest Changes
-      run: git fetch
-
-    - name: Rebase onto Master
-      run: git rebase origin/master
-
-    - name: Apply Stashed Changes
-      run: git stash apply
-
-    - name: Commit PDFs
-      run: |
-        git config --local user.name "$GITHUB_ACTOR"
-        git config --local user.email "$GITHUB_ACTOR@users.noreply.github.com"
-        git add .
-        git commit -m "Automated PDF generation" || echo "No changes to commit"
-        git push --set-upstream origin HEAD:$(git rev-parse --abbrev-ref HEAD)
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Upload PDF
+      uses: actions/upload-artifact@v2
+      with:
+        name: Compiled-PDF
+        path: document.pdf
