@@ -100,8 +100,15 @@ EOF
     pdflatex $filename.tex
     pdflatex $filename.tex
 
+   # Move the PDF and log file to the pdfs directory if the PDF exists
+    if [[ -f "$filename.pdf" ]]; then
+        mv "$filename.pdf" "$filename.log" pdfs/
+    else
+        echo "PDF for $filename not generated."
+        # Move the log file for inspection
+        mv "$filename.log" pdfs/
+    fi
+
     # Clean up auxiliary files
-    #rm $filename.aux $filename.bbl $filename.blg $filename.log $filename.tex
-    rm $filename.aux $filename.bbl $filename.blg $filename.log $filename.run.xml $filename.tex
-    mv *.pdf pdfs/
+    rm -f $filename.aux $filename.bbl $filename.blg $filename.run.xml $filename.tex
 done
