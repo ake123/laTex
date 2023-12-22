@@ -1,35 +1,32 @@
-name: Convert BibTeX to PDF
+name: Compile LaTeX Document
 
 on:
   push:
-    branches: 
-      - master
+    branches:
+      - main
     paths:
-      - '**.bib'  # Trigger the workflow on push events that include .bib files
-      - '**.yml'
-      - '**.sh'
+      - '*.tex'
+      - '*.bib'
 
 jobs:
-  build_latex:
+  build_pdf:
     runs-on: ubuntu-latest
+
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-    - name: Set up TeX Live
-      uses: xu-cheng/latex-action@v2
-      with:
-        root_file: lahti.tex
+      - name: Set up TeX Live
+        uses: xu-cheng/latex-action@v2
+        with:
+          root_file: lahti.tex
 
-    - name: Compile LaTeX document
-      run: |
-        pdflatex -interaction=nonstopmode lahti.tex
-        bibtex lahti
-        pdflatex -interaction=nonstopmode lahti.tex
-        pdflatex -interaction=nonstopmode lahti.tex
+      - name: Compile LaTeX Document
+        run: |
+          latexmk -pdf -interaction=nonstopmode -file-line-error main.tex
 
-    - name: Upload PDF
-      uses: actions/upload-artifact@v2
-      with:
-        name: Compiled-PDF
-        path: document.pdf
+      - name: Upload PDF
+        uses: actions/upload-artifact@v2
+        with:
+          name: Compiled-PDF
+          path: lahti.pdf
