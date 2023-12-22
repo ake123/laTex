@@ -28,6 +28,7 @@ jobs:
         with:
           root_file: lahti
           compiler: biber
+          args: 
 
       - name: Compile again with pdflatex
         uses: dante-ev/latex-action@latest
