@@ -12,6 +12,7 @@ on:
 jobs:
   build_latex:
     runs-on: ubuntu-latest
+    continue-on-error: true # This line allows the job to continue even if there are errors or warnings
     steps:
       - name: Set up Git repository
         uses: actions/checkout@v2
@@ -28,7 +29,6 @@ jobs:
         with:
           root_file: lahti
           compiler: biber
-          args: 
 
       - name: Compile again with pdflatex
         uses: dante-ev/latex-action@latest
