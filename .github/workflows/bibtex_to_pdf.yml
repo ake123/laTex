@@ -26,7 +26,7 @@ jobs:
       - name: Run biber
         uses: dante-ev/latex-action@latest
         with:
-          root_file: lahti.bcf
+          root_file: lahti
           compiler: biber
 
       - name: Compile again with pdflatex
