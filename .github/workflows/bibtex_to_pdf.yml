@@ -6,6 +6,7 @@ on:
       - master
     paths:
       - '*.tex'
+      - '*.yml'
       - '*.bib'
 
 jobs:
