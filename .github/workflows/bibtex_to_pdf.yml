@@ -5,9 +5,9 @@ on:
     branches:
       - master
     paths:
-      - '*.tex'
-      - '*.yml'
-      - '*.bib'
+      - '**.tex'
+      - '**.yml'
+      - '**.bib'
 
 jobs:
   build_pdf:
