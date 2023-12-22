@@ -10,24 +10,26 @@ on:
       - '**.bib'
 
 jobs:
-  build_pdf:
+  build_latex:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Repository
+      - name: Set up Git repository
         uses: actions/checkout@v2
-
-      - name: Set up TeX Live
+      - name: pdflatex main
         uses: dante-ev/latex-action@latest
         with:
           root_file: lahti.tex
-
-      - name: Compile LaTeX Document
-        run: |
-          latexmk -pdf -interaction=nonstopmode -file-line-error main.tex
-
-      - name: Upload PDF
-        uses: actions/upload-artifact@v2
+          compiler: pdflatex
+          args: -interaction=nonstopmode -shell-escape
+      - name: bibtex main
+        uses: dante-ev/latex-action@latest
         with:
-          name: Compiled-PDF
-          path: lahti.pdf
+          root_file: lahti.aux
+          compiler: bibtex
+          args: 
+      - name: pdflatex main
+        uses: dante-ev/latex-action@latest
+        with:
+          root_file: lahti.tex
+          compiler: pdflatex
+          args: -interaction=nonstopmode -shell-escape
