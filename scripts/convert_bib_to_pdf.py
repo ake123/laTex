@@ -2,15 +2,15 @@ import os
 import subprocess
 import pybtex.database.input.bibtex as bibtex_input
 
+# Get the directory where this script is located
 script_dir = os.path.dirname(os.path.abspath(__file__))
-parent_dir = os.path.abspath(os.path.join(script_dir, os.pardir))
 
-# Define your .bib and .tex file names
-bib_file = os.path.join(script_dir, "../lahti.bib")
+# Define the .bib and .tex file paths
+bib_file = os.path.join(script_dir, "lahti.bib")
+tex_file = os.path.join(script_dir, "lahti.tex")
 
-tex_file = os.path.join(script_dir, "../lahti.tex")
-# Specify the output PDF file path (one level above the script folder)
-pdf_file_path = os.path.join(parent_dir, "lahti.pdf")
+# Define the output PDF file path as 'lahti.pdf'
+pdf_file_path = os.path.join(script_dir, "lahti.pdf")
 
 # Load the BibTeX file
 parser = bibtex_input.Parser()
