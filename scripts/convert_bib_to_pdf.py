@@ -1,3 +1,4 @@
+import os
 import subprocess
 import pybtex.database.input.bibtex as bibtex_input
 
