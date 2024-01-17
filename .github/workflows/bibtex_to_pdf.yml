@@ -19,7 +19,7 @@ jobs:
       - name: Install LaTeX and Pandoc
         run: |
           sudo apt-get update -q
-          sudo apt-get install -y texlive-xetex pandoc
+          sudo apt-get install -y texlive-xetex pandoc texlive-bibtex-extra
 
       - name: Compile LaTeX to PDF
         run: |
