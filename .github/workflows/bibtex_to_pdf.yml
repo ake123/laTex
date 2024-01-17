@@ -5,8 +5,10 @@ on:
     branches:
       - master
     paths:
+      - "**.tex"
       - "**.yml"
       - "**.bib"
+      - "**.py"
 jobs:
   build:
     runs-on: ubuntu-latest
