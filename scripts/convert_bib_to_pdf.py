@@ -2,10 +2,12 @@ import os
 import subprocess
 import pybtex.database.input.bibtex as bibtex_input
 
-# Define your .bib and .tex file names
-bib_file = os.path.join(script, "../lahti.bib")
+script_dir = os.path.dirname(os.path.abspath(__file__))
 
-tex_file = os.path.join(script, "../lahti.tex")
+# Define your .bib and .tex file names
+bib_file = os.path.join(script_dir, "../lahti.bib")
+
+tex_file = os.path.join(script_dir, "../lahti.tex")
 
 # Load the BibTeX file
 parser = bibtex_input.Parser()
