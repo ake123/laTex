@@ -8,6 +8,8 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 bib_file = os.path.join(script_dir, "../lahti.bib")
 
 tex_file = os.path.join(script_dir, "../lahti.tex")
+# Specify the output PDF file path (one level above the script folder)
+pdf_file_path = os.path.join(parent_dir, "lahti.pdf")
 
 # Load the BibTeX file
 parser = bibtex_input.Parser()
@@ -28,6 +30,10 @@ try:
     subprocess.run(["bibtex", tex_file.split(".")[0]])
     subprocess.run(["pdflatex", tex_file])
     subprocess.run(["pdflatex", tex_file])
-    print(f'Successfully generated {tex_file.split(".")[0]}.pdf')
+
+    # Move the generated PDF to the specified output path
+    os.rename(tex_file.split(".")[0] + ".pdf", pdf_file_path)
+
+    print(f"Successfully generated PDF at: {pdf_file_path}")
 except Exception as e:
     print(f"Error: {e}")
