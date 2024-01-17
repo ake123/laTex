@@ -7,10 +7,12 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 
 # Define the .bib and .tex file paths
 bib_file = os.path.join(script_dir, "lahti.bib")
-tex_file = os.path.join(script_dir, "lahti.tex")
 
-# Define the output PDF file path as 'lahti.pdf'
-pdf_file_path = os.path.join(script_dir, "lahti.pdf")
+# Specify the path to the .tex file one level up from the script folder
+tex_file = os.path.join(os.path.dirname(script_dir), "lahti.tex")
+
+# Define the output PDF file path as 'lahti.pdf' one level up from the script folder
+pdf_file_path = os.path.join(os.path.dirname(script_dir), "lahti.pdf")
 
 # Load the BibTeX file
 parser = bibtex_input.Parser()
