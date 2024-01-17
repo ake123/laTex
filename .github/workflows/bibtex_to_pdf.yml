@@ -37,7 +37,14 @@ jobs:
 
       - name: Run Python script
         run: python convert_bib_to_pdf.py
-        working-directory: ./scripts
+        working-directory: .
+
+      - name: Compile LaTeX Document
+        run: |
+          pdflatex lahti.tex
+          biber lahti
+          pdflatex lahti.tex
+          pdflatex lahti.tex
 
       - name: Upload PDF Artifact
         uses: actions/upload-artifact@v2
