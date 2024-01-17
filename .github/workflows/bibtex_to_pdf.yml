@@ -23,17 +23,17 @@ jobs:
 
       - name: Compile LaTeX to PDF
         run: |
-          pdflatex -interaction=nonstopmode document.tex
-          biber document
-          pdflatex -interaction=nonstopmode document.tex
-          pdflatex -interaction=nonstopmode document.tex
+          pdflatex -interaction=nonstopmode lahti.tex
+          biber lahti
+          pdflatex -interaction=nonstopmode lahti.tex
+          pdflatex -interaction=nonstopmode lahti.tex
 
       - name: Move PDF to Build Directory
         run: |
-          mv document.pdf build/
+          mv lahti.pdf build/
 
       - name: Upload PDF Artifact
         uses: actions/upload-artifact@v2
         with:
           name: pdf-artifact
-          path: build/document.pdf
+          path: build/lahti.pdf
