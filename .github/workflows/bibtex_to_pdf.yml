@@ -5,41 +5,35 @@ on:
     branches:
       - master
     paths:
-      - '**.tex'
-      - '**.yml'
-      - '**.bib'
-
+      - "**.tex"
+      - "**.yml"
+      - "**.bib"
 jobs:
-  build_latex:
+  build:
     runs-on: ubuntu-latest
-    continue-on-error: true # This line allows the job to continue even if there are errors or warnings
+
     steps:
-      - name: Set up Git repository
+      - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Compile with pdflatex
-        uses: dante-ev/latex-action@latest
-        with:
-          root_file: lahti.tex
-          compiler: pdflatex
-          args: -interaction=nonstopmode -shell-escape
+      - name: Install LaTeX and Pandoc
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y texlive-xetex pandoc
 
-      - name: Run biber
-        uses: dante-ev/latex-action@latest
-        with:
-          root_file: lahti
-          compiler: biber
+      - name: Compile LaTeX to PDF
+        run: |
+          pdflatex -interaction=nonstopmode document.tex
+          biber document
+          pdflatex -interaction=nonstopmode document.tex
+          pdflatex -interaction=nonstopmode document.tex
 
-      - name: Compile again with pdflatex
-        uses: dante-ev/latex-action@latest
-        with:
-          root_file: lahti.tex
-          compiler: pdflatex
-          args: -interaction=nonstopmode -shell-escape
+      - name: Move PDF to Build Directory
+        run: |
+          mv document.pdf build/
 
-      - name: Final pdflatex run
-        uses: dante-ev/latex-action@latest
+      - name: Upload PDF Artifact
+        uses: actions/upload-artifact@v2
         with:
-          root_file: lahti.tex
-          compiler: pdflatex
-          args: -interaction=nonstopmode -shell-escape
+          name: pdf-artifact
+          path: build/document.pdf
