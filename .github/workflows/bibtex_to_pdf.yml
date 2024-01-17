@@ -35,6 +35,11 @@ jobs:
       - name: Install dependencies
         run: pip install pybtex
 
+      - name: Install LaTeX
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y texlive-xetex
+
       - name: Run Python script
         run: python convert_bib_to_pdf.py
         working-directory: .
@@ -50,4 +55,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: pdf-artifact
-          path: ./scripts/lahti.pdf
+          path: ./lahti.pdf
