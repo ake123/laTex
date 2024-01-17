@@ -24,7 +24,6 @@ jobs:
       - name: Compile LaTeX to PDF
         run: |
           pdflatex -interaction=nonstopmode lahti.tex
-          biber lahti
           pdflatex -interaction=nonstopmode lahti.tex
           pdflatex -interaction=nonstopmode lahti.tex
 
