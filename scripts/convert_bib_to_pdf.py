@@ -2,8 +2,8 @@ import subprocess
 import pybtex.database.input.bibtex as bibtex_input
 
 # Define your .bib and .tex file names
-bib_file = "myreferences.bib"
-tex_file = "mydocument.tex"
+bib_file = "lahti.bib"
+tex_file = "lahti.tex"
 
 # Load the BibTeX file
 parser = bibtex_input.Parser()
