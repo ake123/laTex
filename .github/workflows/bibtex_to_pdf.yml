@@ -9,7 +9,6 @@ on:
       - "**.yml"
       - "**.bib"
       - "**.py"
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -40,11 +39,8 @@ jobs:
         run: python convert_bib_to_pdf.py
         working-directory: ./scripts
 
-      - name: Move PDF to current directory
-        run: mv ./scripts/lahti.pdf ./lahti.pdf
-
       - name: Upload PDF Artifact
         uses: actions/upload-artifact@v2
         with:
           name: pdf-artifact
-          path: ./lahti.pdf
+          path: ./scripts/lahti.pdf
