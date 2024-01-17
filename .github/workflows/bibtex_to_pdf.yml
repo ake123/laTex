@@ -5,7 +5,6 @@ on:
     branches:
       - master
     paths:
-      - "**.tex"
       - "**.yml"
       - "**.bib"
 jobs:
@@ -16,23 +15,20 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Install LaTeX and Pandoc
-        run: |
-          sudo apt-get update -q
-          sudo apt-get install -y texlive-xetex pandoc texlive-bibtex-extra
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x"
 
-      - name: Compile LaTeX to PDF
-        run: |
-          pdflatex -interaction=nonstopmode lahti.tex
-          pdflatex -interaction=nonstopmode lahti.tex
-          pdflatex -interaction=nonstopmode lahti.tex
+      - name: Install dependencies
+        run: pip install pybtex
 
-      - name: Move PDF to Build Directory
-        run: |
-          mv lahti.pdf build/
+      - name: Run Python script
+        run: python scripts/convert_bib_to_pdf.py
+        working-directory: ./scripts
 
       - name: Upload PDF Artifact
         uses: actions/upload-artifact@v2
         with:
           name: pdf-artifact
-          path: build/lahti.pdf
+          path: ./scripts/lahti.pdf
