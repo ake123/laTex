@@ -41,6 +41,10 @@ jobs:
           sudo apt-get update -q
           sudo apt-get install -y texlive-xetex texlive-bibtex-extra
 
+      - name: Install Biber
+        run: |
+          sudo apt-get install -y biber
+
       - name: Run Python script
         run: python scripts/convert_bib_to_pdf.py
         working-directory: .
