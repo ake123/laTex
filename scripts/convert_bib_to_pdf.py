@@ -2,6 +2,7 @@ import os
 import subprocess
 import pybtex.database.input.bibtex as bibtex_input
 
+# Get the directory of the script
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
 # Define your .bib and .tex file names
