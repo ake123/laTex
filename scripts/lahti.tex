@@ -6,82 +6,8 @@
 \usepackage{textcomp}
 \usepackage[datesep=.]{datetime2}
 \usepackage[backend=biber, style=alphabetic, maxnames=10, sorting=ydnt, texencoding=utf8]{biblatex}
-\usepackage[english]{babel}
-
-
-% use entry keys verbatim from the bib file
-\DeclareFieldFormat{labelalpha}{\thefield{entrykey}}
-\DeclareFieldFormat{extraalpha}{}
-
-
-
-% highlight authors matching the given first and last names
-\renewcommand*{\mkbibnamegiven}[1]{%
-	\ifthenelse{\equal{\namepartgiven}{\filterfirstname} \and \equal{\namepartfamily}{\filterlastname}}%
-	{\mkbibbold{#1}}%
-	{#1}%
-}
-\renewcommand*{\mkbibnamefamily}[1]{%
-	\ifthenelse{\equal{\namepartgiven}{\filterfirstname} \and \equal{\namepartfamily}{\filterlastname}}%
-	{\mkbibbold{#1}}%
-	{#1}%
-}
-\newcommand{\filterfirstname}{Leo}
-\newcommand{\filterlastname}{Lahti}
-
-
-
-% separate entries to their corresponding (complex) categories
-% edited = there is an editor field, and the type is either book or proceedings
-% tech / phd = filter by type field
-% misc = misc entry type, or a type field with "mathesis"
-\DeclareBibliographyCategory{edited}
-\DeclareBibliographyCategory{tech}
-\DeclareBibliographyCategory{phd}
-\DeclareBibliographyCategory{misc}
-\AtDataInput{%
-	\ifthenelse{\not \ifnameundef{editor} \and \( \ifentrytype{book} \or \ifentrytype{proceedings} \)}%
-	{\addtocategory{edited}{\thefield{entrykey}}}%
-	{}%
-	\ifthenelse{\iffieldequalstr{type}{techreport}}%
-	{\addtocategory{tech}{\thefield{entrykey}}}%
-	{}%
-	\ifthenelse{\iffieldequalstr{type}{phdthesis}}%
-	{\addtocategory{phd}{\thefield{entrykey}}}%
-	{}%
-	\ifthenelse{\iffieldequalstr{type}{mathesis} \or \ifentrytype{misc}}%
-	{\addtocategory{misc}{\thefield{entrykey}}}%
-	{}%
-}
-
-
-
-% main bib file
-\addbibresource{lahti.bib}
-
-% there are no citations, but every bib entry is needed in the bibliography
-\nocite{*}
-
-
+\addbibresource{lahti.bib} % Replace with actual .bib file path
 \begin{document}
-
-\begin{center}
-	\huge\textbf{List of publications}\\
-	\large\textit{Leo Lahti, PhD}\\
-	\small{\today}
-\end{center}
-
-\printbibliography[title={Edited volumes}, category=edited]
-\printbibliography[title={Journal articles}, type=article]
-\printbibliography[title={Book chapters}, type=incollection]
-\printbibliography[title={Conference proceedings}, type=inproceedings]
-\printbibliography[title={Technical reports}, category=tech]
-\printbibliography[title={PhD theses}, category=phd]
-\printbibliography[title={Miscellaneous}, category=misc]
-
-
-
-\bibliographystyle{plain}
-
+\nocite{*}
+\printbibliography
 \end{document}
-
