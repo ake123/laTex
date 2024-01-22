@@ -35,8 +35,13 @@ jobs:
       - name: Run Python Script
         run: python3 convert_bib_to_pdf.py
 
-      - name: Upload PDF as Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: generated-pdf
-          path: Leo_Lahti.pdf
+      - name: Configure Git
+        run: |
+          git config --global user.name 'Your Name'
+          git config --global user.email 'your-email@example.com'
+          
+      - name: Commit PDF
+        run: |
+          git add Leo_Lahti.pdf
+          git commit -m "Add generated PDF"
+          git push origin master
