@@ -33,12 +33,12 @@ jobs:
           sudo apt-get install -y texlive-latex-recommended texlive-fonts-recommended texlive-latex-extra texlive-bibtex-extra biber
 
       - name: Run Python Script
-        run: convert_bib_to_pdf.py
-        # Replace 'path/to/your/script.py' with the actual path to your Python script in the repository
-
+        run: |
+          chmod +x ./convert_bib_to_pdf.py
+          ./convert_bib_to_pdf.py
+          
       - name: Upload PDF as Artifact
         uses: actions/upload-artifact@v2
         with:
           name: generated-pdf
           path: Leo_Lahti.pdf
-          # Replace 'path/to/your/output.pdf' with the actual path to the generated PDF file
