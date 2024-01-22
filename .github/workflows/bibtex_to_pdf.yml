@@ -5,7 +5,6 @@ on:
     branches:
       - master
     paths:
-      - "**.tex"
       - "**.yml"
       - "**.bib"
       - "**.py"
@@ -21,43 +20,25 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: "3.x"
-          architecture: "x64"
+          python-version: '3.x'
 
-      - name: Create virtual environment
-        run: python -m venv venv
-
-      - name: Activate virtual environment
-        run: source venv/bin/activate
-
-      - name: Upgrade setuptools
-        run: pip install --upgrade setuptools
-
-      - name: Install dependencies
-        run: pip install pybtex
+      - name: Install Python Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pybtex reportlab
 
       - name: Install LaTeX
         run: |
-          sudo apt-get update -q
-          sudo apt-get install -y texlive-xetex texlive-bibtex-extra
+          sudo apt-get update
+          sudo apt-get install -y texlive-latex-recommended texlive-fonts-recommended texlive-latex-extra texlive-bibtex-extra biber
 
-      - name: Install Biber
-        run: |
-          sudo apt-get install -y biber
+      - name: Run Python Script
+        run: script/convert_bib_to_pdf.py
+        # Replace 'path/to/your/script.py' with the actual path to your Python script in the repository
 
-      - name: Run Python script
-        run: python scripts/convert_bib_to_pdf.py
-        working-directory: .
-
-      - name: Compile LaTeX Document
-        run: |
-          pdflatex lahti.tex
-          biber lahti
-          pdflatex lahti.tex
-          pdflatex lahti.tex
-
-      - name: Upload PDF Artifact
+      - name: Upload PDF as Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: pdf-artifact
-          path: ./lahti.pdf
+          name: generated-pdf
+          path: Leo_Lahti.pdf
+          # Replace 'path/to/your/output.pdf' with the actual path to the generated PDF file

@@ -1,49 +1,79 @@
 import os
-import subprocess
 import pybtex.database.input.bibtex as bibtex_input
+from reportlab.lib.pagesizes import letter
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.pdfbase import pdfmetrics
+from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer
+from datetime import datetime
 
-# Get the directory of the script
-script_dir = os.path.dirname(os.path.abspath(__file__))
+# Path to the TTF font file
+font_path = "NotoSans-Regular.ttf"  # path to the font file
 
-# Define your .bib and .tex file names
-bib_file = os.path.join(script_dir, "lahti.bib")
-tex_file = os.path.join(script_dir, "lahti.tex")
 
-# Specify the output PDF file path
-pdf_file_path = os.path.join(script_dir, "lahti.pdf")
+def bold_leo_lahti(name):
+    """Bold 'Leo Lahti' in the given name string."""
+    return name.replace('Leo Lahti', '<b>Leo Lahti</b>')
 
-# Load the BibTeX file
-parser = bibtex_input.Parser()
-bib_data = parser.parse_file(bib_file)
+def format_author_name(author):
+    """Reformat author name to 'First Name Last Name' and bold 'Leo Lahti'."""
+    first_names = ' '.join(author.first_names)
+    last_names = ' '.join(author.last_names)
+    full_name = f"{first_names} {last_names}"
+    if 'Leo' in author.first_names and 'Lahti' in author.last_names:
+        full_name = f"<b>{full_name}</b>"
+    return full_name
 
-# Generate a LaTeX file with the bibliography
-with open(tex_file, "w") as tex_file:
-    tex_file.write("\\documentclass[a4paper,12pt]{article}\n")
-    tex_file.write("\\usepackage[verbose,nomarginpar,a4paper,margin=25mm]{geometry}\n")
-    tex_file.write("\\usepackage[utf8]{inputenc}\n")
-    tex_file.write("\\usepackage[T1]{fontenc}\n")
-    tex_file.write("\\usepackage{lmodern}\n")
-    tex_file.write("\\usepackage{textcomp}\n")
-    tex_file.write("\\usepackage[datesep=.]{datetime2}\n")
-    tex_file.write(
-        "\\usepackage[backend=biber, style=alphabetic, maxnames=10, sorting=ydnt, texencoding=utf8]{biblatex}\n"
-    )
-    tex_file.write("\\addbibresource{" + bib_file + "}\n")
-    tex_file.write("\\begin{document}\n")
-    tex_file.write("\\nocite{*}\n")
-    tex_file.write("\\printbibliography\n")
-    tex_file.write("\\end{document}\n")
 
-# Compile the LaTeX document to generate the PDF
-try:
-    subprocess.run(["pdflatex", tex_file])
-    subprocess.run(["biber", tex_file.split(".")[0]])
-    subprocess.run(["pdflatex", tex_file])
-    subprocess.run(["pdflatex", tex_file])
+def format_entry(entry):
+    authors = ', '.join(format_author_name(author) for author in entry.persons['author'])
+    title = entry.fields.get('title', 'No title available')
+    journal = entry.fields.get('journal', 'No journal available')
+    year = entry.fields.get('year', 'No year available')
+    pages = entry.fields.get('pages', 'No pages available')
+    doi = entry.fields.get('doi', 'No DOI available')
 
-    # Move the generated PDF to the specified output path
-    os.rename(tex_file.split(".")[0] + ".pdf", pdf_file_path)
+    formatted_entry = f"[{entry.key}] {authors}. \"{title}\". In: {journal} ({year}), pp. {pages}. doi: {doi}."
+    return formatted_entry
 
-    print(f"Successfully generated PDF at: {pdf_file_path}")
-except Exception as e:
-    print(f"Error: {e}")
+def main():
+    try:
+        # Define the path to your .bib file and output PDF
+        bib_file = "lahti.bib"  # Replace with the actual path to your .bib file
+        pdf_file = "Leo_Lahti.pdf"  # Replace with the desired output PDF path
+
+        # Parse the BibTeX file
+        parser = bibtex_input.Parser()
+        bib_data = parser.parse_file(bib_file)
+
+        # Register the TTF font
+        pdfmetrics.registerFont(TTFont('NotoSans', font_path))
+
+        # PDF Styles with TTF font
+        styles = getSampleStyleSheet()
+        styles['Title'].fontName = 'NotoSans'
+        styles['BodyText'].fontName = 'NotoSans'
+
+        # Create a PDF with the formatted entries
+        doc = SimpleDocTemplate(pdf_file, pagesize=letter)
+        flowables = [
+            Paragraph("List of Publications", styles['Title']),
+            Spacer(1, 12),
+            Paragraph("Leo Lahti Phd", styles['Title']),
+            Paragraph(datetime.now().strftime("%Y-%m-%d"), styles['Title']),
+            Spacer(1, 20)
+        ]
+
+        for key, entry in bib_data.entries.items():
+            formatted_entry = format_entry(entry)
+            flowables.append(Paragraph(formatted_entry, styles['BodyText']))
+            flowables.append(Spacer(1, 12))
+
+        doc.build(flowables)
+        print(f"Successfully generated PDF at: {pdf_file}")
+
+    except Exception as e:
+        print(f"Error: {e}")
+
+if __name__ == "__main__":
+    main()
